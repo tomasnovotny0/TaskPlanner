@@ -11,12 +11,15 @@
     <Window.DataContext>
         <vm:AppViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary Source="/Style/CommonStyles.xaml"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="10"/>
             <!--Control panel-->
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
             <!--Project-->
             <RowDefinition/>
             <RowDefinition Height="15"/>
@@ -29,6 +32,25 @@
 
         <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="3" Fill="#393A3B"/>
         <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="3" Fill="#242526" Margin="0 0 0 3"/>
+
+        <!--Control panel buttons-->
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <Button x:Name="ButtonCreateNew" ToolTip="New project">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+            <Button x:Name="ButtonImport" ToolTip="Import project">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+            <Button x:Name="ButtonSave" ToolTip="Save">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+            <Button x:Name="ButtonSaveAs" ToolTip="Save as">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+            <Button x:Name="ButtonSettings" ToolTip="Settings">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+        </StackPanel>
 
     </Grid>
 </Window>

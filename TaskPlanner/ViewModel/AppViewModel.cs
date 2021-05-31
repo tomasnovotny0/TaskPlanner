@@ -8,5 +8,18 @@ namespace TaskPlanner.ViewModel
 {
     public class AppViewModel
     {
+        public bool DarkTheme { get; set; }
+        public bool WindowBackground { get; set; }
+
+        public AppViewModel()
+        {
+            DarkTheme = true;
+
+        }
+
+        private void Load()
+        {
+
+        }
     }
 }
