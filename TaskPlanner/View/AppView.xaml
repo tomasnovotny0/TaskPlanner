@@ -7,7 +7,8 @@
         xmlns:vm="clr-namespace:TaskPlanner.ViewModel"
         mc:Ignorable="d"
         Title="Task Planner" Height="600" Width="800"
-        WindowState="Maximized" Background="#18191A">
+        WindowState="Maximized" Background="#18191A"
+        Closing="Window_Closing">
     <Window.DataContext>
         <vm:AppViewModel/>
     </Window.DataContext>

@@ -59,6 +59,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\ProjectInfo.cs" />
+    <Compile Include="Model\TaskCard.cs" />
     <Compile Include="ViewModel\AppViewModel.cs" />
     <Compile Include="View\AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
@@ -100,9 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Icon\missing_ic.png" />
   </ItemGroup>

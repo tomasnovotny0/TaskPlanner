@@ -17,6 +17,16 @@ namespace TaskPlanner.ViewModel
 
         }
 
+        public void ProcessProperty(string property, string value)
+        {
+            switch (property)
+            {
+                case "project":
+                    Guid projectID = Guid.Parse(value);
+                    break;
+            }
+        }
+
         private void Load()
         {
 
