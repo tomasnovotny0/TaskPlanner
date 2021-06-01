@@ -27,8 +27,20 @@ namespace TaskPlanner.View
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TaskPlanner");
             CreateDirectoryIfAbsent(path);
-            // TODO load projects
+            LoadProjects(path);
             ProcessOptionsFile(path);
+        }
+
+        private void LoadProjects(string appDir)
+        {
+            AppViewModel viewModel = DataContext as AppViewModel;
+            string projectDir = Path.Combine(appDir, "data");
+            CreateDirectoryIfAbsent(projectDir);
+            string[] projects = Directory.GetFiles(projectDir);
+            foreach (string projectPath in projects)
+            {
+                viewModel.Load(projectPath);
+            }
         }
 
         private void CreateDirectoryIfAbsent(string path)

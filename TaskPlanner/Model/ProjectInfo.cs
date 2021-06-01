@@ -13,6 +13,7 @@ namespace TaskPlanner.Model
         public DateTime LastOpened { get; set; }
         public string ProjectName { get; private set; }
         public string ProjectDescription { get; private set; }
+        public string ProjectDataPath { get; private set; }
 
         public void Rename(string newProjectName)
         {
