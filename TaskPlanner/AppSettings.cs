@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 
 namespace TaskPlanner
 {
     public class AppSettings
     {
         public string LastProjectPath { get; set; }
+        public bool DarkTheme { get; set; }
 
         private readonly Regex propertyRegex = new Regex("[a-zA-z0-9_]=[a-zA-Z0-9_/\\.]");
 
@@ -15,6 +17,7 @@ namespace TaskPlanner
             using (StreamWriter writer = new StreamWriter(Constants.OptionsFile))
             {
                 SaveProperty(writer, "project", LastProjectPath);
+                SaveProperty(writer, "darkTheme", DarkTheme);
             }
         }
 
@@ -60,6 +63,13 @@ namespace TaskPlanner
             {
                 case "project":
                     LastProjectPath = propertyValue ?? "";
+                    break;
+                case "darkTheme":
+                    if (!bool.TryParse(propertyValue, out bool dark))
+                    {
+                        DarkTheme = false;
+                    }
+                    DarkTheme = dark;
                     break;
             }
         }

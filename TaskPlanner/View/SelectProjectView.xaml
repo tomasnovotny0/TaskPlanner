@@ -12,16 +12,42 @@
     <Window.DataContext>
         <vm:SelectProjectViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary Source="/Style/CommonStyles.xaml"/>
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="ButtonNewProject" ToolTip="New">
+                <Image Source="/Icon/new_project.png"/>
+            </Button>
+            <Button x:Name="ButtonImportProject" ToolTip="Import">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+            <Button x:Name="ButtonSettings" ToolTip="Settings">
+                <Image Source="/Icon/missing_ic.png"/>
+            </Button>
+        </StackPanel>
 
         <Border Grid.Row="1" CornerRadius="25" Background="#bcbcbc" Margin="0 10 0 0">
-            <ListView Background="Transparent" BorderBrush="Transparent" Margin="25"/>
+            <ListView Background="Transparent" BorderBrush="Transparent" Margin="25"
+                      ItemsSource="{Binding Projects}"/>
         </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 10 0 0" VerticalAlignment="Center"
+                    Visibility="{Binding CreateProjectHint}">
+            <Label Content="There are no projects" Foreground="#555555"
+                   FontSize="24" FontFamily="Arial"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   MouseDoubleClick="Label_MouseDoubleClick"/>
+            <Label Content="Double-click here to create new project" Foreground="#555555"
+                   FontSize="24" FontFamily="Arial"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   MouseDoubleClick="Label_MouseDoubleClick"/>
+        </StackPanel>
     </Grid>
 </Window>

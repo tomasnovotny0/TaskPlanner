@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ProjectInfo.cs" />
     <Compile Include="Model\TaskCard.cs" />
