@@ -59,12 +59,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ProjectInfo.cs" />
     <Compile Include="Model\TaskCard.cs" />
-    <Compile Include="ViewModel\AppViewModel.cs" />
-    <Compile Include="View\AppView.xaml.cs">
-      <DependentUpon>AppView.xaml</DependentUpon>
+    <Compile Include="ViewModel\SelectProjectViewModel.cs" />
+    <Compile Include="View\SelectProjectView.xaml.cs">
+      <DependentUpon>SelectProjectView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -98,12 +100,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AppView.xaml">
+    <Page Include="View\SelectProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icon\new_project.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\missing_ic.png" />
   </ItemGroup>
