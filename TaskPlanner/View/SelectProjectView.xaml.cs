@@ -16,7 +16,18 @@ namespace TaskPlanner.View
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // TODO create new project
+            DisplayNewProjectDialog();
+        }
+
+        private void ButtonNewProject_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayNewProjectDialog();
+        }
+
+        private void DisplayNewProjectDialog()
+        {
+            NewProjectView view = new NewProjectView();
+            view.ShowDialog();
         }
     }
 }

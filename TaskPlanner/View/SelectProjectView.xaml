@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="ButtonNewProject" ToolTip="New">
+            <Button x:Name="ButtonNewProject" ToolTip="New" Click="ButtonNewProject_Click">
                 <Image Source="/Icon/new_project.png"/>
             </Button>
             <Button x:Name="ButtonImportProject" ToolTip="Import">
