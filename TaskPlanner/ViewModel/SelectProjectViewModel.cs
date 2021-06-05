@@ -27,6 +27,27 @@ namespace TaskPlanner.ViewModel
             LoadProjects();
         }
 
+        public void CreateProject(string projectName, string projectDescription, string projectFolder, bool open)
+        {
+            Helper.CreateDirectoryIfAbsent(projectFolder);
+            ProjectInfo project = new ProjectInfo
+            {
+                ProjectName = ValidateProjectName(projectName),
+                ProjectDescription = projectDescription,
+                ProjectDir = projectFolder,
+                Created = DateTime.Now,
+                LastOpened = DateTime.Now
+            };
+            Projects.Add(project);
+            SortProjects();
+            project.SaveXML();
+            
+            if (open)
+            {
+                // TODO open
+            }
+        }
+
         private void LoadProjects()
         {
             string[] projectFiles = Directory.GetFiles(Constants.ProjectDataDir);
@@ -38,15 +59,38 @@ namespace TaskPlanner.ViewModel
                     continue;
                 LoadProjectInfo(filePath);
             }
-            Projects.Sort(project => project.LastOpened);
+            SortProjects();
         }
 
         private void LoadProjectInfo(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(ProjectInfo));
-            ProjectInfo info = (ProjectInfo) serializer.Deserialize(File.OpenRead(path));
+            ProjectInfo info = new ProjectInfo();
+            try
+            {
+                info.LoadXML(path);
+                Projects.Add(info);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Couldn't load project " + path);
+            } 
+        }
 
-            Projects.Add(info);
+        private void SortProjects()
+        {
+            Projects.Sort(info => info.LastOpened);
+        }
+
+        private string ValidateProjectName(string name)
+        {
+            foreach (ProjectInfo info in Projects)
+            {
+                if (info.ProjectName == name || !ProjectInfo.NAME_VALIDATOR.IsMatch(name))
+                {
+                    throw new ArgumentException("Duplicate project name");
+                }
+            }
+            return name;
         }
 
         private void OnPropertyChanged([CallerMemberName] string property = "")

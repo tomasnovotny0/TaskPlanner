@@ -21,6 +21,7 @@ namespace TaskPlanner
             Settings = new AppSettings();
             CreateDirectoryIfAbsent(Constants.AppDir);
             CreateDirectoryIfAbsent(Constants.ProjectDataDir);
+            CreateDirectoryIfAbsent(Constants.ProjectDirectory);
             Settings.Load();
 
             if (TryLoadLatestProject())

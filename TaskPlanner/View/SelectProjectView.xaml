@@ -7,8 +7,7 @@
         xmlns:vm="clr-namespace:TaskPlanner.ViewModel"
         mc:Ignorable="d"
         Title="Task Planner" Height="600" Width="800"
-        WindowStartupLocation="CenterScreen"
-        Background="#cdcdcd">
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:SelectProjectViewModel/>
     </Window.DataContext>
@@ -17,8 +16,8 @@
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.95*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
@@ -33,9 +32,75 @@
             </Button>
         </StackPanel>
 
-        <Border Grid.Row="1" CornerRadius="25" Background="#bcbcbc" Margin="0 10 0 0">
-            <ListView Background="Transparent" BorderBrush="Transparent" Margin="25"
-                      ItemsSource="{Binding Projects}"/>
+        <Border Grid.Row="1" Background="#dddddd" Margin="0 10 0 0">
+            <ListView Background="Transparent" BorderBrush="Transparent"
+                      ItemsSource="{Binding Projects}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      x:Name="ProjectSelector"
+                      MouseDoubleClick="ProjectSelector_MouseDoubleClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="{Binding ProjectName}" FontFamily="Arial" FontWeight="Bold"/>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                                <Label Content="{Binding ProjectDescription}" FontFamily="Arial"/>
+                            </ScrollViewer>
+                            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                                <Label Content="{Binding Path}" FontFamily="Arial" FontStyle="Italic"/>
+                            </ScrollViewer>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label Content="Created: " FontFamily="Arial"/>
+                                <Label Content="{Binding CreatedFormatted}" FontFamily="Arial"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label Content="Opened: " FontFamily="Arial"/>
+                                <Label Content="{Binding OpenedFormatted}" FontFamily="Arial"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Background" Value="#eeeeee"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter ContentSource="Content"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C5D9EA"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Open" Name="MenuOpen" Click="MenuOpen_Click"/>
+                        <MenuItem Header="Edit" Name="MenuEdit" Click="MenuEdit_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Export data" Name="MenuExport" Click="MenuExport_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Delete" x:Name="MenuDelete" Click="MenuDelete_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
         </Border>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 10 0 0" VerticalAlignment="Center"

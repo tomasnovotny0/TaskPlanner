@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskPlanner.View"
+        xmlns:model="clr-namespace:TaskPlanner.Model"
+        xmlns:local="clr-namespace:TaskPlanner"
         mc:Ignorable="d"
         Title="New project" Width="400" Height="400" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -12,6 +13,8 @@
     </Window.Resources>
     <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -28,18 +31,25 @@
         <Label Content="Project name"/>
         <TextBox x:Name="ProjectName" Grid.Row="1" Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"/>
-        <Label Content="Description" Grid.Row="2"/>
-        <TextBox x:Name="ProjectDescription" Grid.Row="3" TextWrapping="Wrap"
+        <Label Content="Project directory" Grid.Row="2"/>
+        <DockPanel Grid.Row="3" Grid.ColumnSpan="2">
+            <TextBox x:Name="ProjectPath" Text="{x:Static local:Constants.ProjectDirectory}" VerticalContentAlignment="Center" Width="330"/>
+            <Button Margin="5 0 0 0" Content="..." FontSize="13" Click="Button_Click"/>
+        </DockPanel>
+        <Label Content="Description" Grid.Row="4"/>
+        <TextBox x:Name="ProjectDescription" Grid.Row="5" TextWrapping="Wrap"
                  Grid.ColumnSpan="2" Margin="0 0 0 5"/>
-        <Label Content="Project template" Grid.Row="4" VerticalContentAlignment="Center"/>
-        <ComboBox Grid.Row="4" Grid.Column="1"/>
-        <CheckBox Content="Open created project" IsChecked="True" Grid.Row="5" 
+        <Label Content="Project template" Grid.Row="6" VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" VerticalContentAlignment="Center"
+                  ItemsSource="{x:Static model:ProjectTemplates.Templates}"
+                  DisplayMemberPath="TemplateName"/>
+        <CheckBox x:Name="OpenProject" Content="Open created project" IsChecked="True" Grid.Row="7" 
                   Grid.ColumnSpan="2" FontSize="16" FontFamily="Arial"
                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Button x:Name="Create" IsDefault="True" Grid.Row="6" Margin="0 0 5 0"
-                Content="Create"/>
-        <Button x:Name="Cancel" IsCancel="True" Grid.Row="6" Grid.Column="1" Margin="5 0 0 0"
+        <Button x:Name="Create" IsDefault="True" Grid.Row="8" Margin="0 0 5 0"
+                Content="Create" Click="Create_Click"/>
+        <Button x:Name="Cancel" IsCancel="True" Grid.Row="8" Grid.Column="1" Margin="5 0 0 0"
                 Content="Cancel"/>
     </Grid>
 </Window>

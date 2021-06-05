@@ -1,27 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using TaskPlanner.ViewModel;
 
 namespace TaskPlanner.View
 {
-    /// <summary>
-    /// Interaction logic for NewProjectView.xaml
-    /// </summary>
     public partial class NewProjectView : Window
     {
-        public NewProjectView()
+        private readonly SelectProjectViewModel vm;
+
+        public NewProjectView(SelectProjectViewModel _vm)
         {
             InitializeComponent();
+            vm = _vm;
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            string projectName = ProjectName.Text;
+            string projectDescription = ProjectDescription.Text;
+            string projectDirectory = ProjectPath.Text;
+            try
+            {
+                vm.CreateProject(projectName, projectDescription, projectDirectory, OpenProject.IsEnabled);
+                Close();
+            }
+            catch (ArgumentException ae)
+            {
+                MessageBox.Show(ae.Message);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog()
+            {
+                RootFolder = Environment.SpecialFolder.Desktop
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                ProjectPath.Text = dialog.SelectedPath;
+            }
         }
     }
 }

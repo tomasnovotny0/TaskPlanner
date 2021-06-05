@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskPlanner
 {
@@ -25,6 +21,12 @@ namespace TaskPlanner
             if (filename.Length <= index + 1)
                 throw new ArgumentException("Invalid filename - file cannot end with '.' character");
             return filename.Substring(index + 1);
+        }
+
+        public static void CreateDirectoryIfAbsent(string dirPath)
+        {
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
         }
     }
 }
