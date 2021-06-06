@@ -72,13 +72,18 @@
     <Compile Include="Model\IProjectTemplate.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ProjectInfo.cs" />
+    <Compile Include="Model\Task.cs" />
     <Compile Include="Model\TaskCard.cs" />
+    <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\SelectProjectViewModel.cs" />
     <Compile Include="View\EditProjectView.xaml.cs">
       <DependentUpon>EditProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NewProjectView.xaml.cs">
       <DependentUpon>NewProjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProjectView.xaml.cs">
+      <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SelectProjectView.xaml.cs">
       <DependentUpon>SelectProjectView.xaml</DependentUpon>
@@ -125,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

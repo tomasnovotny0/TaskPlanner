@@ -27,7 +27,7 @@
             <Button x:Name="ButtonImportProject" ToolTip="Import">
                 <Image Source="/Icon/missing_ic.png"/>
             </Button>
-            <Button x:Name="ButtonSettings" ToolTip="Settings">
+            <Button x:Name="ButtonSettings" ToolTip="Settings" Click="ButtonSettings_Click">
                 <Image Source="/Icon/missing_ic.png"/>
             </Button>
         </StackPanel>
@@ -42,12 +42,12 @@
                     <DataTemplate>
                         <Grid Margin="3">
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
+                                <RowDefinition Height="25"/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2.5*"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
@@ -56,16 +56,23 @@
                                 <Label Content="{Binding ProjectDescription}" FontFamily="Arial"/>
                             </ScrollViewer>
                             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                                <Label Content="{Binding Path}" FontFamily="Arial" FontStyle="Italic"/>
+                                <Label Content="{Binding Path}" FontFamily="Arial" FontStyle="Italic" FontSize="11" VerticalContentAlignment="Center"/>
                             </ScrollViewer>
-                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="Created: " FontFamily="Arial"/>
-                                <Label Content="{Binding CreatedFormatted}" FontFamily="Arial"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="Opened: " FontFamily="Arial"/>
-                                <Label Content="{Binding OpenedFormatted}" FontFamily="Arial"/>
-                            </StackPanel>
+
+                            <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Created:" FontFamily="Arial"/>
+                                <Label Content="{Binding CreatedFormatted}" FontFamily="Arial" Grid.Column="1"/>
+                                <Label Content="Opened:" FontFamily="Arial" Grid.Row="1"/>
+                                <Label Content="{Binding OpenedFormatted}" FontFamily="Arial" Grid.Row="1" Grid.Column="1"/>
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -87,6 +94,9 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#C5D9EA"/>
                             </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FFFFFF"/>
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
@@ -97,7 +107,7 @@
                         <Separator/>
                         <MenuItem Header="Export data" Name="MenuExport" Click="MenuExport_Click"/>
                         <Separator/>
-                        <MenuItem Header="Delete" x:Name="MenuDelete" Click="MenuDelete_Click" />
+                            <MenuItem Header="Delete" x:Name="MenuDelete" Click="MenuDelete_Click"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 using TaskPlanner.Model;
@@ -35,22 +36,26 @@ namespace TaskPlanner.View
 
         private void MenuDelete_Click(object sender, RoutedEventArgs e)
         {
-            ProjectInfo info = ProjectSelector.SelectedItem as ProjectInfo;
             SelectProjectViewModel viewModel = DataContext as SelectProjectViewModel;
-
-            File.Delete(info.Path);
-            File.Delete(Path.Combine(Constants.ProjectDataDir, info.ProjectName + ".xml"));
-            viewModel.Projects.Remove(info);
+            RunActionOnSelectedProject(info =>
+            {
+                File.Delete(info.Path);
+                File.Delete(Path.Combine(Constants.ProjectDataDir, info.ProjectName + ".xml"));
+                viewModel.Projects.Remove(info);
+            });
         }
 
         private void MenuExport_Click(object sender, RoutedEventArgs e)
         {
+            RunActionOnSelectedProject(info =>
+            {
 
+            });
         }
 
         private void MenuEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (ProjectSelector.SelectedItem is ProjectInfo info)
+            RunActionOnSelectedProject(info =>
             {
                 EditProjectView view = new EditProjectView(info);
                 string oldPath = info.Path;
@@ -61,15 +66,12 @@ namespace TaskPlanner.View
                     info.ProjectDescription = view.ProjectDescription.Text;
                 }
                 MoveExistingFiles(oldPath, info.Path);
-            }
+            });
         }
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (ProjectSelector.SelectedItem is ProjectInfo info)
-            {
-                Open(info);
-            }
+            RunActionOnSelectedProject(Open);
         }
 
         private void ProjectSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -82,7 +84,12 @@ namespace TaskPlanner.View
 
         private void Open(ProjectInfo info)
         {
-
+            App.Settings.LastProjectPath = Path.Combine(Constants.ProjectDataDir, info.ProjectName + ".xml");
+            info.LastOpened = DateTime.Now;
+            info.SaveXML();
+            ProjectView projectView = new ProjectView();
+            projectView.Show();
+            Close();
         }
 
         private void MoveExistingFiles(string oldPath, string newPath)
@@ -93,6 +100,23 @@ namespace TaskPlanner.View
                     File.Delete(newPath);
                 File.Move(oldPath, newPath);
             }
+        }
+
+        private void RunActionOnSelectedProject(Action<ProjectInfo> action)
+        {
+            if (ProjectSelector.SelectedItem is ProjectInfo info)
+            {
+                action.Invoke(info);
+            }
+            else
+            {
+                MessageBox.Show("Project is not selected!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

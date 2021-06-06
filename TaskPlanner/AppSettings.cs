@@ -8,16 +8,18 @@ namespace TaskPlanner
     public class AppSettings
     {
         public string LastProjectPath { get; set; }
+        public bool OpenLatestProjectOnLaunch { get; set; }
         public bool DarkTheme { get; set; }
 
-        private readonly Regex propertyRegex = new Regex("[a-zA-z0-9_]=[a-zA-Z0-9_/\\.]");
+        private readonly Regex propertyRegex = new Regex("[a-zA-z0-9_]+=[a-zA-Z0-9_/\\.]+");
 
         public void Save()
         {
             using (StreamWriter writer = new StreamWriter(Constants.OptionsFile))
             {
-                SaveProperty(writer, "project", LastProjectPath);
+                SaveProperty(writer, "openLatestOnLaunch", OpenLatestProjectOnLaunch);
                 SaveProperty(writer, "darkTheme", DarkTheme);
+                SaveProperty(writer, "project", LastProjectPath);
             }
         }
 
@@ -70,6 +72,13 @@ namespace TaskPlanner
                         DarkTheme = false;
                     }
                     DarkTheme = dark;
+                    break;
+                case "openLatestOnLaunch":
+                    if (!bool.TryParse(propertyValue, out bool openLatest))
+                    {
+                        OpenLatestProjectOnLaunch = false;
+                    }
+                    OpenLatestProjectOnLaunch = openLatest;
                     break;
             }
         }

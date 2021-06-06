@@ -6,12 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TaskPlanner.Model;
+using TaskPlanner.View;
 
 namespace TaskPlanner
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public static AppSettings Settings { get; private set; }
@@ -24,20 +23,26 @@ namespace TaskPlanner
             CreateDirectoryIfAbsent(Constants.ProjectDirectory);
             Settings.Load();
 
-            if (TryLoadLatestProject())
+            if (Settings.OpenLatestProjectOnLaunch)
             {
-                // TODO open project window
-            }
-            else
-            {
-                StartupUri = new Uri("View/SelectProjectView.xaml", UriKind.Relative);
-            }
-        }
+                try
+                {
+                    if (Settings.LastProjectPath == null || !File.Exists(Settings.LastProjectPath))
+                        throw new ArgumentException("Invalid project path");
+                    ProjectInfo info = new ProjectInfo();
+                    info.LoadXML(Settings.LastProjectPath); // test load xml file to make sure it is valid
+                    info.LastOpened = DateTime.Now;
+                    info.SaveXML();
+                    StartupUri = new Uri("View/ProjectView.xaml", UriKind.Relative);
+                }
+                catch (Exception)
+                {
 
-        private bool TryLoadLatestProject()
-        {
-            // TODO implement
-            return false;
+                }
+            }
+
+            if (StartupUri == null)
+                StartupUri = new Uri("View/SelectProjectView.xaml", UriKind.Relative);
         }
 
         private void CreateDirectoryIfAbsent(string dirPath)

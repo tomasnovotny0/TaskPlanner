@@ -56,5 +56,12 @@ namespace TaskPlanner.Model
             Created = created;
             LastOpened = opened;
         }
+
+        public Project LoadProject()
+        {
+            Project project = new Project(Path);
+            project.LoadProject();
+            return project;
+        }
     }
 }

@@ -9,9 +9,9 @@ namespace TaskPlanner
 {
     public static class Extensions
     {
-        public static void Sort<Source, Key>(this ObservableCollection<Source> observable, Func<Source, Key> keySelector)
+        public static void Sort<Source, Key>(this ObservableCollection<Source> observable, Func<ObservableCollection<Source>, IOrderedEnumerable<Source>> sorter)
         {
-            List<Source> list = observable.OrderBy(keySelector).ToList();
+            List<Source> list = sorter.Invoke(observable).ToList();
             observable.Clear();
             foreach (Source source in list)
             {

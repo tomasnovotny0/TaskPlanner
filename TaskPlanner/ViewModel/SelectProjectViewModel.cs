@@ -78,7 +78,7 @@ namespace TaskPlanner.ViewModel
 
         private void SortProjects()
         {
-            Projects.Sort(info => info.LastOpened);
+            Projects.Sort<ProjectInfo, DateTime>(list => list.OrderByDescending(info => info.LastOpened));
         }
 
         private string ValidateProjectName(string name)
